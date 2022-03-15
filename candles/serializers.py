@@ -1,9 +1,8 @@
-from dataclasses import Field
 from rest_framework import serializers
-from .models import Candle
+from .models import Fragrant
 
-class CandleSerializer(serializers.ModelSerializer):
+class FragrantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Candle
-        Field = ['scent', 'seasonal_collection', 'color','gift_quantity','wick_count','price']
+        model = Fragrant
+        fields = ['id','scent','seasonal_collection','color','gift_quantity','price','wick_count']
         

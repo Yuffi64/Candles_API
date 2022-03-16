@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,20 +23,20 @@ def fragrant_list(request):
         serializer = FragrantSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_201_CREATED)
        
        
              
-@api_view(['GET'])
+@api_view(['GET', 'PUT'])
 def fragrant_detail(request, pk):
-    try:
-        fragrant = Fragrant.objects.get(pk=pk)
+    fragrant = get_object_or_404(Fragrant, pk=pk)
+    if request.method == 'GET':
         serializer = FragrantSerializer(fragrant);
         return Response(serializer.data)
     
     
-    
-    except Fragrant.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND);
-    
-     
+    elif request.method == 'PUT':
+        serializer = FragrantSerializer(fragrant, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

@@ -27,7 +27,7 @@ def fragrant_list(request):
        
        
              
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT','DELETE'])
 def fragrant_detail(request, pk):
     fragrant = get_object_or_404(Fragrant, pk=pk)
     if request.method == 'GET':
@@ -40,3 +40,8 @@ def fragrant_detail(request, pk):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+        fragrant.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    

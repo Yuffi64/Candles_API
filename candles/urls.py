@@ -3,5 +3,5 @@ from . import views
 
 
 urlspatherns =[
-    path('', views.candles_list),
+    path('', views.fragrant_list),
 ]
